@@ -130,9 +130,6 @@ export class DataScene extends DataJson {
       resolve(this);
       console.log(this.gameObjects);
 
-
-
-
-    });
+    })
   }
 }

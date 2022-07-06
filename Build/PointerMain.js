@@ -1,7 +1,7 @@
-import * as THREE from 'http://localhost/Meta/Build/three/three.module.js';
+import * as THREE from 'https://jecodelesoir.github.io/MiaouEngine/Build/three/three.module.js';
 import {  DataPointerMain  } from './engine/data/DataPointerMain.js';
 import {  Scene  } from './engine/Scene.js';
-import AmmoLib from 'http://localhost/Meta/Build/ammo/ammo.js';
+import AmmoLib from 'https://jecodelesoir.github.io/MiaouEngine/Build/ammo/ammo.js';
 import Input from './engine/utils/Input.js';
 import Time from './engine/utils/Time.js';
 import LoaderRegister from './engine/utils/LoaderRegister.js';

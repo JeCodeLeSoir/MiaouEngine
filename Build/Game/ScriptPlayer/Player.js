@@ -1,6 +1,6 @@
 import Input from '../../engine/utils/Input.js';
 import MonoBehaviour from '../../engine/Components/MonoBehaviour.js';
-import * as THREE from 'http://localhost/Meta/Build/three/three.module.js';
+import * as THREE from 'https://jecodelesoir.github.io/MiaouEngine/Build/three/three.module.js';
 import Time from '../../engine/utils/Time.js';
 import PointerMain from '../../PointerMain.js';
 const _PI_2 = Math.PI / 2;

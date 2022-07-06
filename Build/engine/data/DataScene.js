@@ -1,4 +1,4 @@
-import * as THREE from 'http://localhost/Meta/Build/three/three.module.js';
+import * as THREE from 'https://jecodelesoir.github.io/MiaouEngine/Build/three/three.module.js';
 import {  GameObject  } from '../GameObject.js';
 import {  List  } from '../utils/List.js';
 import {  DataJson  } from '../DataJson.js';

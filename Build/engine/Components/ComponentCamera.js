@@ -1,5 +1,5 @@
 import {  Component  } from './Component.js';
-import * as THREE from 'http://localhost/Meta/Build/three/three.module.js';
+import * as THREE from 'https://jecodelesoir.github.io/MiaouEngine/Build/three/three.module.js';
 export default class ComponentCamera extends Component {
     constructor() {
         super();

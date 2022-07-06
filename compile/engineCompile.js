@@ -2,7 +2,7 @@ const fs = require('fs');
 const readline = require('readline');
 const Path = require('path');
 
-const host = "http://localhost/Meta/";
+const host = "https://jecodelesoir.github.io/MiaouEngine/";
 const TsConfig = require('../tsconfig.json');
 
 const SrcFolder = Path.resolve(__dirname, '../src');
