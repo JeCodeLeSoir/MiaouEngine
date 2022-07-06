@@ -25,11 +25,6 @@ export class Transform {
             this.rotation.copy(this.localRotation).multiply(this.parent.GetWorldRotation());
             this.scale.copy(this.localScale).multiply(this.parent.GetWorldScale());
         }
-        else {
-            this.position.copy(this.localPosition);
-            this.rotation.copy(this.localRotation);
-            this.scale.copy(this.localScale);
-        }
     }
     SetParent(parent) {
         this.parent = parent;

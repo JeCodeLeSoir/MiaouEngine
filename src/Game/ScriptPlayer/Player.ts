@@ -4,8 +4,8 @@ import * as THREE from '@three';
 import Time from "../../engine/utils/Time";
 import ComponentCamera from "../../engine/Components/ComponentCamera";
 import PointerMain from "../../PointerMain";
-import MathF from "../../engine/utils/MathF";
 
+const _PI_2 = Math.PI / 2;
 
 export default class Player extends MonoBehaviour {
 
@@ -16,7 +16,7 @@ export default class Player extends MonoBehaviour {
     offsetCameraPosition = new THREE.Vector3(0, 1, 0);
     offsetCameraRotation = new THREE.Euler(0, 0, 0);
 
-    xRotation: number = 0;
+    rotation: number = 0;
 
     public Awake() {
         this.gameObject?.transform.position.set(0, 0, 0);
@@ -34,7 +34,7 @@ export default class Player extends MonoBehaviour {
         let x = -Input.getAxis("Vertical");
 
         let mx = Input.getMouseValue("X");
-        let mouseY = Input.getMouseValue("Y");
+        let my = Input.getMouseValue("Y");
 
         let position: THREE.Vector3 = this.gameObject?.transform.position;
 
@@ -44,18 +44,12 @@ export default class Player extends MonoBehaviour {
         this.Camera.gameObject?.transform.position.set(position.x, position.y, position.z);
         this.Camera.gameObject?.transform.position.add(this.offsetCameraPosition);
 
-        this.xRotation -= mouseY;
-        this.xRotation = MathF.clamp(this.xRotation, -90, 90);
+        let rotationCamera: THREE.Quaternion = this.Camera.gameObject?.transform.rotation;
 
-        let localRotation: THREE.Quaternion = this.Camera.gameObject?.transform.localRotation;
-        localRotation = new THREE.Euler(this.xRotation, 0, 0, "XYZ");
+        rotationCamera.x += my * 0.002 * 1;
+        rotationCamera.y -= mx * 0.002 * 1;
 
-        //let rotationCamera: THREE.Quaternion = this.Camera.gameObject?.transform.rotation;
-
-        //rotationCamera.x += my * 0.002 * 1;
-        //rotationCamera.y -= mx * 0.002 * 1;
-
-        //this.Camera.gameObject?.transform.rotation.set(rotationCamera.x, rotationCamera.y, rotationCamera.z);
+        this.Camera.gameObject?.transform.rotation.set(rotationCamera.x, rotationCamera.y, rotationCamera.z);
     }
 
     public LateUpdate() {

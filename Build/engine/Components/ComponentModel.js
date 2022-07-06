@@ -1,4 +1,4 @@
-import {  GLTFLoader  } from 'http://localhost/Meta/Build/three/jsm/loaders/GLTFLoader.js';
+import {  GLTFLoader  } from 'http://localhost/Meta/Build/build/jsm/GLTFLoader.js';
 import {  Component  } from './Component.js';
 import LoaderRegister from '../utils/LoaderRegister.js';
 export default class ComponentModel extends Component {

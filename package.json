@@ -11,6 +11,7 @@
   "dependencies": {
     "babel-loader": "^8.2.5",
     "esm": "^3.2.25",
+    "js-to-ts-converter": "^0.18.2",
     "loader-utils": "^3.2.0",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.6",

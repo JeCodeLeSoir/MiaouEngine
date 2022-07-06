@@ -1,5 +1,5 @@
 import * as THREE from "@three";
-import { GLTFLoader } from "@jsm/loaders/GLTFLoader";
+import { GLTFLoader } from "@Build/GLTFLoader";
 import { Component } from "./Component";
 import LoaderRegister from "../utils/LoaderRegister";
 

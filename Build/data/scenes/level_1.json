@@ -19,6 +19,7 @@
     "gameObjects": [
         {
             "name": "gameObject_Camera",
+            "parent": "xxxx-xxxxx-xxxx",
             "transform": {
                 "position": {
                     "x": -1,

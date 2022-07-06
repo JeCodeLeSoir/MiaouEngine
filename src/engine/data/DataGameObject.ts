@@ -37,7 +37,6 @@ export abstract class DataGameObject {
   }
 
   public ctor_Update() {
-    console.log(this.transform);
     this.transform.ctor_Update();
     this.components.forEach((component: Component) => {
       component.ctor_Update();

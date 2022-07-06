@@ -225,6 +225,8 @@ export default class PointerMain extends DataPointerMain {
 
       if (Camera && scene) {
 
+        //Update GameObject
+
         scene.gameObjects.forEach((gameObject: GameObject) => {
           gameObject.ctor_Update();
         });

@@ -21,7 +21,6 @@ export class Transform {
    }
 
    public ctor_Update() {
-
       if (this.parent) {
          this.localPosition = this.position.sub(this.parent.GetWorldPosition());
          this.localRotation = this.rotation.multiply(this.parent.GetWorldRotation().inverse());
@@ -32,10 +31,6 @@ export class Transform {
          this.position.copy(this.localPosition).applyQuaternion(this.parent.GetWorldRotation());
          this.rotation.copy(this.localRotation).multiply(this.parent.GetWorldRotation());
          this.scale.copy(this.localScale).multiply(this.parent.GetWorldScale());
-      } else {
-         this.position.copy(this.localPosition);
-         this.rotation.copy(this.localRotation);
-         this.scale.copy(this.localScale);
       }
    }
 
