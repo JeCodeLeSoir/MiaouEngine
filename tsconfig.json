@@ -1,0 +1,41 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "baseUrl": ".",
+
+        "watch": false,
+
+        "noImplicitAny": false,
+        "removeComments": true,
+        "preserveConstEnums": true,
+
+        "sourceMap": true,
+        "module": "es2022",
+        "target": "es2022",
+
+        "allowJs": false,
+        "checkJs": false,
+         
+        "moduleResolution": "node",
+        
+        "paths": {
+            "@ammo":[
+                "Build/ammo/ammo.js"
+            ],
+            "@three":[
+                "Build/three/three.module.js"
+            ],
+            "@jsm/*":[
+                "Build/three/jsm/*"
+            ]
+        }
+    },
+    "include": [
+        "./src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

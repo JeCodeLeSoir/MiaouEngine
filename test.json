@@ -1,0 +1,41 @@
+{
+    "name": "",
+    "gameObjects": [],
+    "scene": {
+        "metadata": {
+            "version": 4.5,
+            "type": "Object",
+            "generator": "Object3D.toJSON"
+        },
+        "object": {
+            "uuid": "5960fb0d-4b4d-4e13-b5c7-76a513260fbf",
+            "type": "Scene",
+            "layers": 1,
+            "matrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "background": 10526880,
+            "fog": {
+                "type": "Fog",
+                "color": 10526880,
+                "near": 10,
+                "far": 50
+            }
+        }
+    }
+}

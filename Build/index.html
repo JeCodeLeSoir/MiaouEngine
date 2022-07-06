@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .overler {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            background-color: blue;
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="container"></div>
+
+
+    <script defer type="importmap">
+    	{
+    	    "imports": {
+    			"three": "http://localhost/Meta/Build/three/three.module.js"
+    	    }
+    	}
+    </script>
+    <!-- Modules js -->
+    <script defer type="module" src="main.js"></script>
+</body>
+
+</html>

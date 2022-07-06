@@ -1,0 +1,7 @@
+{
+    "DefaultScene": 0,
+    "MaxFps": 60,
+    "PathScenes": [
+        "data/scenes/level_1.json"
+    ]
+}
