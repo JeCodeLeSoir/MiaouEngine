@@ -2,6 +2,9 @@ import { CleanPlugin } from "webpack";
 
 export default class Cursor {
     static Instance: Cursor;
+
+    static isLocked: boolean = false;
+
     domElement: HTMLElement;
 
     constructor(domElement: HTMLElement) {
@@ -17,10 +20,12 @@ export default class Cursor {
     }
 
     static lock() {
+
         Cursor.Instance.lock();
     }
 
     static unlock() {
+
         Cursor.Instance.unlock();
     }
 
@@ -33,7 +38,12 @@ export default class Cursor {
     };
 
     onPointerlockChange(e: any) {
-        console.log(e);
+        if (this.domElement.ownerDocument.pointerLockElement === this.domElement) {
+            Cursor.isLocked = true;
+        }
+        else {
+            Cursor.isLocked = false;
+        }
     }
 
     onPointerlockError(e: any) {

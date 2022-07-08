@@ -1,5 +1,3 @@
-import * as THREE from "@three";
-import PointerMain from "../PointerMain";
 import ComponentCamera from "./Components/ComponentCamera";
 
 import { DataScene } from "./data/DataScene";

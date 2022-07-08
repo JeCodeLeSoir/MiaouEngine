@@ -1,6 +1,8 @@
 import { Key } from "readline";
+import Cursor from "./Cursor";
 import { KeyCode } from "./Key.enum";
 import MathF from "./MathF";
+import Time from "./Time";
 
 export abstract class AxisInput {
   public value: number = 0;
@@ -34,10 +36,29 @@ export class AxisInputMouse extends AxisInput {
   public Update() {
     let _mousepos: number = Input.getMouseValue(this.mouseAxis);
 
-    this.value = (this.lastValue - _mousepos)
-    this.value = MathF.clamp(this.value, this.min, this.max);
+    //console.log("_mousepos", _mousepos + ", " + this.lastValue);
+
+    let v = (_mousepos - this.lastValue)
+    //console.log(v)
 
     this.lastValue = _mousepos;
+
+    /*if (_mousepos > this.lastValue) {
+      this.value = 1;
+      this.lastValue = _mousepos;
+    }
+    else if (_mousepos < this.lastValue) {
+      this.value = -1;
+      this.lastValue = _mousepos;
+    }
+    else if (this.lastValue === _mousepos) {
+      this.value = 0;
+      this.lastValue = _mousepos;
+    }*/
+
+    //this.value = MathF.clamp(this.value, this.min, this.max);
+    //this.value = 0;
+
   }
 }
 
@@ -90,7 +111,8 @@ export class InputSchema {
 }
 
 export default class Input {
-  public static Instance: Input;
+
+  private static Instance: Input;
 
   domElement: HTMLElement;
 
@@ -140,8 +162,6 @@ export default class Input {
 
   constructor(domElement: HTMLElement) {
     this.domElement = domElement;
-
-    Input.Instance = this;
     this.inputBuffer = [];
     this.mouseBuffer = [];
 
@@ -154,34 +174,68 @@ export default class Input {
         new AxisInputKey(KeyCode.Q, 0, 1, false),
         new AxisInputKey(KeyCode.D, 0, 1, true),
       ]),
-      new InputSchema("MouseX", [
+      new InputSchema("Mouse X", [
         new AxisInputMouse("X", -1, 1, false),
       ]),
-      new InputSchema("MouseY", [
+      new InputSchema("Mouse Y", [
         new AxisInputMouse("Y", -1, 1, false),
       ]),
     ];
 
     document.addEventListener("keydown", (e) => this.keydown(e));
     document.addEventListener("keyup", (e) => this.keyup(e))
-    //mouse
-    document.addEventListener("mousemove", (e) => {
-      this.mouseBuffer["X"] = { key: "MouseX", value: e.x };
-      this.mouseBuffer["Y"] = { key: "MouseY", value: e.y };
-    }, false);
+    document.addEventListener('mousemove', (e) => this.mousemove(e));
 
-    this.domElement.ownerDocument.addEventListener('mousemove', (event) => {
-
-      this.mouseBuffer["X"] = { key: "MouseX", value: event.movementX };
-      this.mouseBuffer["Y"] = { key: "MouseY", value: event.movementY };
-
-    }, false);
+    Input.Instance = this;
   }
 
-  Update() {
+  static Update() {
+    Input.Instance.SystemInputUpdate();
+  }
+
+
+  SystemInputUpdate() {
     this.inputSchema.forEach(schema => {
       schema.Update();
     });
+
+    //filter mouse buffer remove is delta < Time.deltaTime
+    //console.log("Allo?");
+    //console.log(this.mouseBuffer);
+
+
+    /*
+   
+    for (let key in this.inputBuffer) {
+      let buffer = this.inputBuffer[key];
+      if (buffer.delta < Time.deltaTime) {
+        delete this.inputBuffer[key];
+      }
+    }*/
+
+  }
+
+  timeout: any;
+  mousemove(e: any) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => { this.mouseBuffer = [] }, 100);
+
+    //console.log(event);
+    //console.log("mousemove", (event.movementX || event.mozMovementX || event.webkitMovementX || 0))
+    //console.log("mousemove", (event.movementY || event.mozMovementY || event.webkitMovementY || 0))
+
+    if (Cursor.isLocked === false) return;
+
+    this.mouseBuffer["X"] = {
+      key: "X",
+      value: (e.movementX || e.mozMovementX || e.webkitMovementX || 0)
+    };
+
+    this.mouseBuffer["Y"] = {
+      key: "Y",
+      value: (e.movementY || e.mozMovementY || e.webkitMovementY || 0)
+    };
+
   }
 
   keydown(e: KeyboardEvent) {

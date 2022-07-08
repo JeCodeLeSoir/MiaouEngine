@@ -1,4 +1,3 @@
-import { GameObject } from "../GameObject";
 import { Component } from "./Component";
 import MonoBehaviour from "./MonoBehaviour";
 

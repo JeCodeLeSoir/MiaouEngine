@@ -1,5 +1,4 @@
 import { Component } from "./Component";
-import * as THREE from '@three';
 
 export default class ComponentAnimator extends Component {
 

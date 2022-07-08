@@ -1,6 +1,10 @@
+import * as THREE from "@three";
 import PointerMain from "./PointerMain";
 
 async function init() {
+
+  console.log(THREE);
+
   let container = document.getElementById(
     "container"
   ) as HTMLInputElement | null;

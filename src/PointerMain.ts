@@ -1,9 +1,6 @@
 import * as THREE from "@three";
-import { PointerLockControls } from '@jsm/controls/PointerLockControls.js';
 import { DataPointerMain } from "./engine/data/DataPointerMain";
 import { Scene } from "./engine/Scene";
-import { List } from "./engine/utils/List";
-import { OrbitControls } from "@jsm/controls/OrbitControls";
 import { GameObject } from "./engine/GameObject";
 import { Component } from "./engine/Components/Component";
 
@@ -102,11 +99,10 @@ export default class PointerMain extends DataPointerMain {
 
     };
 
+    new Input(document.body);
+    new Cursor(document.body);
+
     await AmmoLib().then(async (re) => {
-
-      new Input(container);
-      new Cursor(container);
-
       Ammo = re;
 
       let collisionConfiguration = new Ammo.btDefaultCollisionConfiguration();
@@ -143,68 +139,47 @@ export default class PointerMain extends DataPointerMain {
         callback(this.loadingManager);
       });
 
-      const backIsNotLoad = ($) => {
-        console.log("backIsNotLoad");
-
-        if (Object.values(LoaderRegister.loaders).length == 0) {
-
-          console.log(this.htmlLoading);
-          container.parentElement?.removeChild(this.htmlLoading);
-
-          PointerMain.Instance.SetLoad(true);
-          PointerMain.Instance.OnLoad();
-          console.log("== finish ==")
-
-          let scene: Scene = this.getScene();
-          let Camera: any = this.getCamera()._object as THREE.Camera;
-
-          if (Camera && scene) {
-
-            /* const controls = new PointerLockControls(Camera, document.body);
-             
- 
-             scene.scene.add(controls.getObject());*/
-
-            window.addEventListener('click', function () {
-              //controls.lock();
-              Cursor.lock();
-            });
-
-            scene.gameObjects.forEach((element: GameObject) => {
-              element.components.forEach((element: Component) => {
-                element.ctor_Start();
-              });
-            });
-          }
-
-        }
-
-        if ($.IsLoad()) {
-          /*
-                    const controls = new OrbitControls(
-                      this.getCamera()._object as THREE.Camera,
-                      this.renderer.domElement
-                    );
-          
-                    controls.enablePan = false;
-                    controls.enableZoom = true;
-                    controls.target.set(0, 1, 0);
-                    controls.update();*/
-
-
-          window.addEventListener("resize", $.onWindowResize);
-          $.ctor_Update();
-          console.log("==============>", $);
-        } else {
-          requestAnimationFrame(() => backIsNotLoad($));
-        }
-      };
-
-      backIsNotLoad(this);
+      this.backIsNotLoad();
     });
 
 
 
+  }
+
+  backIsNotLoad() {
+    console.log("backIsNotLoad");
+
+    if (Object.values(LoaderRegister.loaders).length == 0) {
+
+      console.log(this.htmlLoading);
+      this.container.parentElement?.removeChild(this.htmlLoading);
+
+      PointerMain.Instance.SetLoad(true);
+      PointerMain.Instance.OnLoad();
+      console.log("== finish ==")
+
+      let scene: Scene = this.getScene();
+      let camera: any = this.getCamera()._object as THREE.Camera;
+
+      if (camera && scene) {
+        window.addEventListener('click', function () {
+          Cursor.lock();
+        });
+
+        scene.gameObjects.forEach((gameObject: GameObject) => {
+          console.log(gameObject)
+
+          gameObject.ctor_Start();
+        });
+      }
+    }
+
+    if (this.IsLoad()) {
+      window.addEventListener("resize", () => this.onWindowResize());
+      this.ctor_Update();
+    } else {
+      requestAnimationFrame(() => this.backIsNotLoad());
+    }
   }
 
   private ctor_Update() {
@@ -218,12 +193,12 @@ export default class PointerMain extends DataPointerMain {
 
     if (this.delta > this.interval) {
 
-      Input.Instance.Update();
+      Input.Update();
 
       let scene: Scene = this.getScene();
-      let Camera: any = this.getCamera()._object as THREE.Camera;
+      let camera: any = this.getCamera()._object as THREE.Camera;
 
-      if (Camera && scene) {
+      if (camera && scene) {
 
         //Update GameObject
 
@@ -233,7 +208,7 @@ export default class PointerMain extends DataPointerMain {
 
         //this.physicsWorld.stepSimulation(deltaTime, 10);
 
-        this.renderer.render(scene.scene, Camera);
+        this.renderer.render(scene.scene, camera);
       }
 
       this.delta = this.delta % this.interval;
@@ -241,8 +216,14 @@ export default class PointerMain extends DataPointerMain {
   }
 
   private onWindowResize() {
-    //camera.aspect = window.innerWidth / window.innerHeight;
-    //camera.updateProjectionMatrix();
+
+    let camera: any = this.getCamera()._object as THREE.Camera;
+
+    if (camera) {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+    }
+
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 }

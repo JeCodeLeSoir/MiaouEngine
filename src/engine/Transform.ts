@@ -140,4 +140,8 @@ export class Transform {
    public Translate(x: number, y: number, z: number) {
       this.position.add(new THREE.Vector3(x, y, z));
    }
+
+   public GetForward(): THREE.Vector3 {
+      return new THREE.Vector3(0, 0, 1).applyQuaternion(this.rotation);
+   }
 }

@@ -1,4 +1,4 @@
-import * as THREE from 'https://jecodelesoir.github.io/MiaouEngine/Build/three/three.module.js';
+import * as THREE from 'http://localhost/Meta/Build/three/three.module.js';
 export class Transform {
     position;
     rotation;
@@ -109,5 +109,8 @@ export class Transform {
     }
     Translate(x, y, z) {
         this.position.add(new THREE.Vector3(x, y, z));
+    }
+    GetForward() {
+        return new THREE.Vector3(0, 0, 1).applyQuaternion(this.rotation);
     }
 }

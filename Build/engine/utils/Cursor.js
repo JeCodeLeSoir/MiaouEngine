@@ -1,5 +1,6 @@
 export default class Cursor {
     static Instance;
+    static isLocked = false;
     domElement;
     constructor(domElement) {
         this.domElement = domElement;
@@ -21,7 +22,12 @@ export default class Cursor {
     }
     ;
     onPointerlockChange(e) {
-        console.log(e);
+        if (this.domElement.ownerDocument.pointerLockElement === this.domElement) {
+            Cursor.isLocked = true;
+        }
+        else {
+            Cursor.isLocked = false;
+        }
     }
     onPointerlockError(e) {
         console.log(e);

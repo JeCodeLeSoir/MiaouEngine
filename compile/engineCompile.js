@@ -2,7 +2,9 @@ const fs = require('fs');
 const readline = require('readline');
 const Path = require('path');
 
-const host = "https://jecodelesoir.github.io/MiaouEngine/";
+//const host = "https://jecodelesoir.github.io/MiaouEngine/";
+const host = "http://localhost/Meta/";
+
 const TsConfig = require('../tsconfig.json');
 
 const SrcFolder = Path.resolve(__dirname, '../src');
@@ -19,13 +21,13 @@ Files.forEach(file => {
 
 //watch file
 function WatchFile(file) {
-    console.log(` watch File ${file}`);
-    fs.watch(file, (event, filename) => {
+    //console.log(` watch File ${file}`);
+    /*fs.watch(file, (event, filename) => {
         if (event === 'change') {
             console.log(`File ${filename} has been changed`);
             FileChange()
         }
-    });
+    });*/
 }
 
 function FileChange() {

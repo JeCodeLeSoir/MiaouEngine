@@ -1,3 +1,4 @@
+import Cursor from './Cursor.js';
 import {  KeyCode  } from './Key.enum.js';
 import MathF from './MathF.js';
 export class AxisInput {
@@ -22,8 +23,7 @@ export class AxisInputMouse extends AxisInput {
     }
     Update() {
         let _mousepos = Input.getMouseValue(this.mouseAxis);
-        this.value = (this.lastValue - _mousepos);
-        this.value = MathF.clamp(this.value, this.min, this.max);
+        let v = (_mousepos - this.lastValue);
         this.lastValue = _mousepos;
     }
 }
@@ -105,7 +105,6 @@ export default class Input {
     }
     constructor(domElement) {
         this.domElement = domElement;
-        Input.Instance = this;
         this.inputBuffer = [];
         this.mouseBuffer = [];
         this.inputSchema = [
@@ -117,28 +116,40 @@ export default class Input {
                 new AxisInputKey(KeyCode.Q, 0, 1, false),
                 new AxisInputKey(KeyCode.D, 0, 1, true),
             ]),
-            new InputSchema("MouseX", [
+            new InputSchema("Mouse X", [
                 new AxisInputMouse("X", -1, 1, false),
             ]),
-            new InputSchema("MouseY", [
+            new InputSchema("Mouse Y", [
                 new AxisInputMouse("Y", -1, 1, false),
             ]),
         ];
         document.addEventListener("keydown", (e) => this.keydown(e));
         document.addEventListener("keyup", (e) => this.keyup(e));
-        document.addEventListener("mousemove", (e) => {
-            this.mouseBuffer["X"] = { key: "MouseX", value: e.x };
-            this.mouseBuffer["Y"] = { key: "MouseY", value: e.y };
-        }, false);
-        this.domElement.ownerDocument.addEventListener('mousemove', (event) => {
-            this.mouseBuffer["X"] = { key: "MouseX", value: event.movementX };
-            this.mouseBuffer["Y"] = { key: "MouseY", value: event.movementY };
-        }, false);
+        document.addEventListener('mousemove', (e) => this.mousemove(e));
+        Input.Instance = this;
     }
-    Update() {
+    static Update() {
+        Input.Instance.SystemInputUpdate();
+    }
+    SystemInputUpdate() {
         this.inputSchema.forEach(schema => {
             schema.Update();
         });
+    }
+    timeout;
+    mousemove(e) {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => { this.mouseBuffer = []; }, 100);
+        if (Cursor.isLocked === false)
+            return;
+        this.mouseBuffer["X"] = {
+            key: "X",
+            value: (e.movementX || e.mozMovementX || e.webkitMovementX || 0)
+        };
+        this.mouseBuffer["Y"] = {
+            key: "Y",
+            value: (e.movementY || e.mozMovementY || e.webkitMovementY || 0)
+        };
     }
     keydown(e) {
         let code = e.which || e.keyCode;
